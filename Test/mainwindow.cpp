@@ -26,13 +26,14 @@ void MainWindow::on_pushButton_clicked()
         return;
     }
     QImage image(file);
+
     if (image.isNull()) {
         qDebug() << "Failed to load image";
         return;
     }
-    image = image.scaled(100, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    image = image.scaled(120, 60);
-    image = image.scaled(image.width(), image.height() * 0.5);
+    int outWidth = 120;
+    int outHeight = image.height() * outWidth / image.width() / 2;
+    image = image.scaled(outWidth, outHeight);
     QString chars = "@#S%?*+;:,. ";
     QString result;
 
