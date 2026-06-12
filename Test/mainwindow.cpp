@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->comboPreset->setCurrentIndex(1);
+    setWindowTitle("ASCII Art Generator");
 }
 
 MainWindow::~MainWindow()
@@ -32,24 +34,9 @@ void MainWindow::on_pushButton_clicked()
         qDebug() << "Failed to load image";
         return;
     }
+    currentImage = image;
     ui->label->setText("Selected: " + (file));
-    int outWidth = 120;
-    int outHeight = image.height() * outWidth / image.width() / 2;
-    image = image.scaled(outWidth, outHeight);
-    QString chars = "@#S%?*+;:,. ";
-    QString result;
 
-    for (int y = 0; y < image.height(); y++) {
-        for (int x = 0; x < image.width(); x++) {
-            int gray = qGray(image.pixel(x, y));
-            gray = std::clamp(gray * 1.3, 0.0, 255.0);
-            int index = (gray * (chars.size() - 1)) / 255;
-            result += chars[index];
-        }
-        result += "\n";
-    }
-
-    ui->textAscii->setPlainText(result);
 }
 
 
@@ -60,4 +47,41 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 
+
+
+void MainWindow::on_buttonCreate_clicked()
+{
+    if (currentImage.isNull()) return;
+    QImage image = currentImage;
+    int outWidth = 0;
+    QString preset = ui->comboPreset->currentText();
+    if (preset == "High Detail") {
+        outWidth = 180;
+    }
+    else if (preset == "Balanced") {
+        outWidth = 100;
+    }
+    else if (preset == "Terminal") {
+        outWidth = 60;
+    }
+    int outHeight = image.height() * outWidth / image.width() / 2;
+    image = image.scaled(outWidth, outHeight);
+    QString chars = "@#S%?*+;:,. ";
+    QString result;
+
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            int gray = qGray(image.pixel(x, y));
+            gray = std::clamp(gray * 1.3, 0.0, 255.0);
+            if (ui->checkBoxInvert->isChecked()){
+                gray = 255 - gray;
+            }
+            int index = (gray * (chars.size() - 1)) / 255;
+            result += chars[index];
+        }
+        result += "\n";
+    }
+
+    ui->textAscii->setPlainText(result);
+}
 

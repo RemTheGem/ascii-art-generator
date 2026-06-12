@@ -22,7 +22,10 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_buttonCreate_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QImage currentImage;
 };
 #endif // MAINWINDOW_H
