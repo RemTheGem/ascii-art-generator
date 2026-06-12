@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QtGui/qimage.h>
+#include <QGuiApplication>
+#include <QClipboard>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,10 +20,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(this, "Open Image", "", "Images (*.png *.jpg *.jpeg)");
-    if (file.isEmpty()) return;
+    QString file = QFileDialog::getOpenFileName(this, "Open Image", "", "Images (*.png *.jpg *.jpeg *.webp)");
+    if (file.isEmpty()){
+        qDebug() << "No image selected";
+        return;
+    }
     QImage image(file);
-    if (image.isNull()) return;
+    if (image.isNull()) {
+        qDebug() << "Failed to load image";
+        return;
+    }
     image = image.scaled(100, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     image = image.scaled(120, 60);
     image = image.scaled(image.width(), image.height() * 0.5);
@@ -44,6 +52,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(ui->textAscii->toPlainText());
 }
 
