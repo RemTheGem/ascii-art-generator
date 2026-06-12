@@ -13,6 +13,9 @@ A simple desktop application (under construction) built with Qt and C++ to conve
 
 The application converts each pixel's brightness into ASCII characters, mapping dark pixels to dense characters and light ones to sparse characters and vice versa if inverted
 
+<p float="left">
+<img src="images/Before.jpg" width="45%" height="620"/><img src="images/After.png" width="45%" height="570"/>
+</p>
 ## Presets
 - High Detail: 180 Characters wide
 - Balanced: 100 Characters wide
@@ -25,7 +28,7 @@ The application converts each pixel's brightness into ASCII characters, mapping 
 4. Enable Invert if you want
 5. Click Create ASCII
 6. "Copy to clipboard" or "Save as .txt"
-
+<img src="images/Window.png" width="600"/>
 
 ## Clone the Repository
 
