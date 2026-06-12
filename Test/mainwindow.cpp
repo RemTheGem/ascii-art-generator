@@ -2,6 +2,8 @@
 #include "./ui_mainwindow.h"
 #include <QAbstractButton>
 #include <QPushButton>
+#include <QFile>
+#include <QTextStream>
 #include <QFileDialog>
 #include <QtGui/qimage.h>
 #include <QGuiApplication>
@@ -83,5 +85,28 @@ void MainWindow::on_buttonCreate_clicked()
     }
 
     ui->textAscii->setPlainText(result);
+}
+
+
+void MainWindow::on_pushButtonSaveTxt_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        "Save ASCII as TXT",
+        "",
+        "Text Files (*.txt)"
+        );
+
+    if (fileName.isEmpty()) return;
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+    out << ui->textAscii->toPlainText();
+    if (!fileName.endsWith(".txt")) {
+        fileName += ".txt";
+    }
+    file.close();
 }
 

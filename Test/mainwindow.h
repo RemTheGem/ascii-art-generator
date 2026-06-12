@@ -24,6 +24,8 @@ private slots:
 
     void on_buttonCreate_clicked();
 
+    void on_pushButtonSaveTxt_clicked();
+
 private:
     Ui::MainWindow *ui;
     QImage currentImage;
