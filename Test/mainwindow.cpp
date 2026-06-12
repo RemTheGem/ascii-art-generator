@@ -23,6 +23,7 @@ void MainWindow::on_pushButton_clicked()
     QString file = QFileDialog::getOpenFileName(this, "Open Image", "", "Images (*.png *.jpg *.jpeg *.webp)");
     if (file.isEmpty()){
         qDebug() << "No image selected";
+        ui->label->setText("No file selected");
         return;
     }
     QImage image(file);
@@ -31,6 +32,7 @@ void MainWindow::on_pushButton_clicked()
         qDebug() << "Failed to load image";
         return;
     }
+    ui->label->setText("Selected: " + (file));
     int outWidth = 120;
     int outHeight = image.height() * outWidth / image.width() / 2;
     image = image.scaled(outWidth, outHeight);
@@ -56,4 +58,6 @@ void MainWindow::on_pushButton_2_clicked()
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(ui->textAscii->toPlainText());
 }
+
+
 
