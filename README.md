@@ -30,5 +30,5 @@ The application converts each pixel's brightness into ASCII characters, mapping 
 ## Clone the Repository
 
 ```bash
-git clone something something
+git clone https://github.com/RemTheGem/ascii-art-generator.git
 ```
